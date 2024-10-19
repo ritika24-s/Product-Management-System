@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product Listing</title>
+  </head>
+  <body>
+    <header>
+      <h1>Product Listing by Navi Pharmaceuticals</h1>
+      <span> <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Log Out</button>
+    </form></span>
+    </header>
+
+    <main>
+      {% block content %}
+      <!-- This block will be overridden by content from other templates -->
+      {% endblock %}
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

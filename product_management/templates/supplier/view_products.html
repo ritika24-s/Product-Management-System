@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Products</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Product Code</th>
+        <th>Price</th>
+        <th>Stock Status</th>
+        <th>Image</th>
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>{{ product.product_code }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stock_status|yesno:"In Stock,Out of Stock" }}</td>
+        <td>
+            {% if product.main_image %}
+            <img src="{{ product.main_image.url }}" alt="{{ product.name }}" width="100">
+            {% else %}
+            No image
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+            <a href="{% url 'delete_product' product.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'add_product' %}">Add New Product</a>
+</br>
+<a href="{% url 'supplier_cheaper_analogues' %}">View cheaper_analogues</a>
+{% endblock %}

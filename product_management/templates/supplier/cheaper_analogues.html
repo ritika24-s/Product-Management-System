@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}
+    Cheaper Analogues of Products
+{% endblock %}
+
+{% block content %}
+    <h1>Cheaper Analogues of Products</h1>
+    
+    <div class="product-list">
+        {% if product_analogues %}
+            <ul>
+                {% for item in product_analogues %}
+                    <li>
+                        {% if item.cheaper_analogues %}
+                            <h4>Cheaper Analogues:</h4>
+                            <ul>
+                                {% for analogue in item.cheaper_analogues %}
+                                    <li>
+                                        <p>Name: {{ analogue.name }}</p>
+                                        <p>Product Code: {{ analogue.product_code }}</p>
+                                        <p>Price: ${{ analogue.price }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No cheaper analogue available.</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No products with cheaper analogues found.</p>
+        {% endif %}
+    </div>
+<a href="{% url 'supplier_product_list' %}">Back to Your Products</a>
+{% endblock %}

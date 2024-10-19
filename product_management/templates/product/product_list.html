@@ -1,0 +1,35 @@
+<h2>Products List</h2>
+
+{% if products %}
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Product Code</th>
+            <th>Price</th>
+            <th>Stock Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.product_code }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.stock_status|yesno:"In Stock,Out of Stock" }}</td>
+            <td>
+                <a href="{% url 'edit_product' product.id %}">Edit</a> | 
+                <a href="{% url 'delete_product' product.id %}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No products available.</p>
+{% endif %}
+
+{% if user.is_superuser or user.supplier %}
+<a href="{% url 'product_add' %}">Add Product</a>
+{% endif %}

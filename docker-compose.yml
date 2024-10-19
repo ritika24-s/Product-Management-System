@@ -1,0 +1,40 @@
+name: product_listing
+
+services:
+  db:
+    image: postgres:16.3-alpine3.20
+    container_name: product_db
+    restart: always
+    environment:
+      POSTGRES_DB: "product_management"
+      POSTGRES_USER: "ritika"
+      POSTGRES_PASSWORD: "password123"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/scripts:/docker-entrypoint-initdb.d
+      - pg_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    container_name: product_manager
+    command: sh -c "python product_managment/manage.py makemigrations && python product_managment/manage.py migrate && python product_managment/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=product_management.settings
+      # - DATABASE_NAME=${DATABASE_NAME}
+      # - DATABASE_USER=${DATABASE_USER}
+      # - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      # - DATABASE_HOST=${DATABASE_HOST}
+      # - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_URL=postgres://ritika:password123@db:5432/product_management
+    # env_file:
+    #   - /.env
+
+volumes:
+  pg_data:

@@ -1,0 +1,14 @@
+-- This script contains the query ran on psql tool of PgAdmin4
+
+CREATE USER ritika WITH PASSWORD 'password123';
+CREATE DATABASE product_management OWNER ritika;
+
+alter role ritika set client_encoding to 'UTF-8';
+alter role ritika set default_transaction_isolation to 'read committed';
+alter role ritika set timezone to 'UTC';
+-- ALTER DATABASE product_management OWNER TO ritika;
+GRANT ALL PRIVILEGES ON DATABASE product_management TO ritika;
+GRANT ALL ON SCHEMA public TO ritika;
+GRANT ALL ON SCHEMA public TO public;
+GRANT USAGE, CREATE ON SCHEMA PUBLIC TO ritika;
+

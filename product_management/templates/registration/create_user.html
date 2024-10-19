@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Create User{% endblock %}
+
+{% block content %}
+<h2>Create User</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <label for="group">User Type:</label>
+    <select name="group" id="group">
+        <option value="buyer">Buyer</option>
+        <option value="supplier">Supplier</option>
+    </select>
+    
+    <button type="submit">Create User</button>
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+{% endblock %}
